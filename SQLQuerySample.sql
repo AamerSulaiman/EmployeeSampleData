@@ -2,6 +2,7 @@
 Select * 
 From EmployeeSampleData..Emp
 
+	
 --Select Name, Job title, Department, Business Unit, Age and sort by Department, Business Unit, Age
 Select Full_name, Job_title, Department, Business_Unit, Age From EmployeeSampleData..Emp 
 Order by 3,4,5
@@ -15,12 +16,13 @@ From EmployeeSampleData..Emp
 Group by Country
 Order by 1 desc
 
+	
 --Select everyone that is aged 33 and under working in the Accounting Department
 Select Full_name, Job_Title, Department, Business_Unit, Age From EmployeeSampleData..Emp 
 Where Age <= 33 and Department like 'Accounting' 
 
+	
 --Based on Job Title, determine the number of employees, the average age and the average salary of the position (Using temp table)
-
 Drop table if exists #temp_empdata
 Create table #temp_empdata (
 Job_Title varchar(100),
