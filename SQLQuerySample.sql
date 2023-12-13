@@ -1,7 +1,6 @@
 --Select all data
 Select * 
 From EmployeeSampleData..Emp
-
 	
 --Select Name, Job title, Department, Business Unit, Age and sort by Department, Business Unit, Age
 Select Full_name, Job_title, Department, Business_Unit, Age From EmployeeSampleData..Emp 
@@ -21,7 +20,10 @@ Order by 1 desc
 Select Full_name, Job_Title, Department, Business_Unit, Age From EmployeeSampleData..Emp 
 Where Age <= 33 and Department like 'Accounting' 
 
-	
+--Select all employees that have left between January 1st, 2014 and December 31st, 2020
+Select * From EmployeeSampleData..Emp
+Where Exit_Date BETWEEN '2014-01-01' AND '2020-12-31'
+
 --Based on Job Title, determine the number of employees, the average age and the average salary of the position (Using temp table)
 Drop table if exists #temp_empdata
 Create table #temp_empdata (
@@ -32,8 +34,15 @@ AvgSalary int
 )
 
 Insert into #temp_empdata
-SELECT Job_Title, Count(Job_Title), Avg(Age), AVG(Annual_salary)
+Select Job_Title, Count(Job_Title), Avg(Age), AVG(Annual_salary)
 from EmployeeSampleData..Emp
 Group by Job_Title
 
 Select * from #temp_empdata
+
+--Join tables based on Employee ID (EEID), show all directors over the age of 30
+Select e.Full_name, e.Job_title, e.Department, e.Business_Unit, e.Age, j.Previous_Role, j.Years_In_Role
+From EmployeeSampleData..Emp e
+join EmployeeJobData..Emp j on j.EEID = e.EEID
+where e.Age >30 and e.Job_Title = 'Director'
+
